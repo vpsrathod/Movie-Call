@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Movie App</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+<div class="header">
+    <nav>
+        <a href="#" class="brand">
+            <img src="../images/LOGO.png" alt="" class="logo">
+        </a>
+    </nav>
+
+    <div class="header-content">
+        <h1>Unlimited movies, TV shows and more</h1>
+            <p>Search your movie.Know about movie.</p>
+            <p>Ready to watch? Enter your movie name.</p>
+
+        <form class="search">
+            <input type="text" class="input-search" placeholder="Movie name..">
+            <button class="search-btn">Search</button>
+        </form> 
+
+    </div>
+
+    
+</div>
+
+<section id="card-section">
+    <div id="card-container"></div>
+</section>
+
+
+
+
+    
+</body>
+
+<script>
+    
+    // api section
+    const apiKey="c0a704d3";
+    const apiUrl="https://www.omdbapi.com/?i=tt3896198&s=";
+
+    //https://www.omdbapi.com/?i=tt3896198&apikey=c0a704d3&t=red
+
+    const searchBox =document.querySelector(".input-search");
+    const searchBtn =document.querySelector(".search-btn");
+
+    const container =document.getElementById("card-container");
+    
+    const cardSection =document.getElementById("card-section");
+
+
+
+    async function movieCall(mname){
+        const response = await fetch(apiUrl + mname +`&apikey=${apiKey}`);
+
+        const data = await response.json();
+
+        console.log(data);
+
+        container.innerHTML="";
+
+        if (data.Response === "True" && Array.isArray(data.Search)){
+
+            data.Search.forEach(movie=> {
+
+                const card = document.createElement("div");
+            card.className="card";
+            card.innerHTML=`
+            <img class="card-img" src="${movie.Poster !== "N/A" ? movie.Poster : '../weather-app/images/Clear.png'}" >
+            <h2>${movie.Title}</h2>
+            <p>Year: ${movie.Year}</p>
+            <p>Type: ${movie.Type}</p>
+            `;
+            
+
+            // adding this for open detailed page of this card using imdb id 
+            card.addEventListener("click",()=>{
+                window.location.href=`detail.html?imdbID=${movie.imdbID}`;
+            });
+
+            
+            container.appendChild(card);
+
+            });
+
+             //scroll dwon
+
+            cardSection.scrollIntoView({behavior:"smooth"}); 
+            
+        }
+        else{
+            container.innerHTML=`
+            <div style='width:100%;text-align:center;padding:40px;'>    
+            <h2>Movie Not Found!</h2>
+            <p>Please try another name or check your spelling.</p>
+            </div>
+            `;
+
+            //scroll down
+
+            cardSection.scrollIntoView({behavior:"smooth"});
+        }
+    }
+    
+
+    searchBtn.addEventListener("click",(event)=>{
+        event.preventDefault();
+        movieCall(searchBox.value);
+    });
+
+
+ 
+</script>
+
+
+</html>

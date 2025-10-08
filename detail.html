@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MovieCall</title>
+    <link rel="stylesheet" href="dstyle.css">
+</head>
+<body>
+    <div id="detail-container"></div>
+
+    
+    
+</body>
+
+<script>
+    const apiKey="c0a704d3";
+    const apiUrl="https://www.omdbapi.com/?";
+
+    const urlParams=new URLSearchParams(window.location.search);
+    const imdbID = urlParams.get('imdbID');
+    const container = document.getElementById("detail-container");
+
+    //this is youtube video function call using api
+    async function getTrailerVideoId(y_query,y_apiKey){
+        const youtub_apiUrl =`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${y_query}&key=${y_apiKey}&type=video&maxResults=1`;
+        const response =await fetch(youtub_apiUrl);
+        const result = await response.json();
+        if(result.items && result.items.length>0){
+            return result.items[0].id.videoId;
+        }
+        return null;
+    }
+
+
+
+
+
+    async function movieDetails(){
+        if(!imdbID){
+            container.innerHTML=`<h2>No movie selected.</h2>`;
+            return;
+        }
+
+        const response = await fetch(apiUrl+`i=${imdbID}`+`&apikey=${apiKey}`);
+        const data = await response.json();
+
+        console.log(data);
+        if(data.Response === "True"){
+
+            //for youtube trailer for the movie
+            const youtube_apiKey = "AIzaSyCE2_VHHOu2t_6IXKj9l7QxziFFD_dp8_w";
+            const youtubeQuery =`${data.Title} ${data.Year} official trailer`;
+            const videoId = await getTrailerVideoId(youtubeQuery, youtube_apiKey);
+
+            let trailerEmbed ="";
+            if (videoId){
+                trailerEmbed=`
+                <h3>${data.Title} Trailer</h3>
+                <iframe width="500" height="215"
+                src="https://www.youtube.com/embed/${videoId}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+                `;
+            }else{
+                trailerEmbed=`<p>Trailer not available.</p>`;
+
+            }
+
+            container.innerHTML=`
+            <div class="detail-card">
+               <div class="card-img-div"> 
+                <img class="card-img" src="${data.Poster !=="N/A" ? data.Poster:'../weather-app/images/Clear.png' }">
+               </div>
+               
+               <div class="card-details-div"> 
+                <h2>${data.Title}</h2>
+                <p><strong>Year:</strong>${data.Year}</p>
+                <p><strong>Genre:</strong>${data.Genre}</p>
+                <p><strong>Director:</strong>${data.Director}</p>
+                <p><strong>Cast:</strong>${data.Actors}</p>
+                <p><strong>Plot:</strong>${data.Plot}</p>
+                <p><strong>IMDB Rating:</strong>${data.imdbRating}</p>
+                </div>
+               
+              <div class="div-trailer"> 
+                ${trailerEmbed}               
+            </div>
+            </div>
+            `;
+        }
+        else{
+            container.innerHTML="<h2>Movie Details Not Found</h2>";
+        }
+
+    }
+
+    movieDetails();
+
+</script>
+</html>
