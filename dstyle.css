@@ -1,32 +1,88 @@
 *{
-    
+    margin: 0%;
     padding: 0%;
-    background:rgb(0, 0, 0);
-    color: aliceblue;
+    /* background:black; */
+    color: rgb(243, 243, 243);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.card-details-div{
-     
-    
-    height: 300px;
-    width: 350px;
+body{
+    background: #000;
+    margin: 0%;
+    padding: 0%;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.bg{
+  width: 100%;
+  height: 100vh;
+  background:      url(./images/Titanic\ 3d\ Movie\ Walpapers\ Wallpaper.jpg) ;
+  background-size: cover;
+  background-position: center;
+  padding: 10px 8%;
+  position: fixed;
+  filter: blur(20px);
+  z-index: -1;
+}
+
+.logo {
+  width: 180px;
+  cursor: pointer;
 }
 
 .detail-card{
-    border-radius: 5px;
-    border: 0px;
-     
-    display: flex;
-    gap: 20px;
+    width: 1200px;
+    margin: 10px;
+    
+}
 
+.heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.h-title{
+    margin-left: 50px;
+}
+
+.heading div p{
+    margin-right: 100px;
+}
+
+.card-view{
+    display:flex ;
+    align-items: center;
+    margin-top: 20px;
+    gap: 8px;
+    margin-left: 50px;
+     
+    
 }
 .card-img{
-    border-radius: 5px;   
+    height: 350px;
+    width: 250px;
+    border-radius:5px;
+  
+}
+.card-trailer{
+    border-radius:5px;
+
 }
 
-.div-trailer{
-     height: 300px;
-    width: 350px;
-
+.detail-movie{
+    margin-top: 20px;
+    width: 800px;
+    margin-left: 50px;
+    
 }
+.youtube-error{
+    border-radius: 5px;
+    width:800px;
+    height:350px;
+    
+}
+
+ 

@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Movie App</title>
+    <title>Movie Call</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     
 </head>
 <body>
 <div class="header">
     <nav>
         <a href="#" class="brand">
-            <img src="../images/LOGO.png" alt="" class="logo">
+            <img src="./images/LOGO.png" alt="" class="logo">
         </a>
     </nav>
 
@@ -32,16 +33,14 @@
     <div id="card-container"></div>
 </section>
 
-
-
-
+<script src="config.js"></script>
     
 </body>
 
 <script>
     
     // api section
-    const apiKey="c0a704d3";
+    const apiKey=OMDB_API_KEY;
     const apiUrl="https://www.omdbapi.com/?i=tt3896198&s=";
 
     //https://www.omdbapi.com/?i=tt3896198&apikey=c0a704d3&t=red
